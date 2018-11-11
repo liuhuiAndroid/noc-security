@@ -3,6 +3,7 @@ package com.noc.web.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.noc.dto.User;
 import com.noc.dto.UserQueryCondition;
+import com.noc.exception.UserNotExistException;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.springframework.data.domain.Pageable;
@@ -32,6 +33,10 @@ public class UserController {
     @GetMapping("/{id:\\d+}")
     @JsonView(User.UserDetailView.class)
     public User getInfo(@PathVariable String id) {
+//        throw new RuntimeException("user not exist");
+//        throw new UserNotExistException(id);
+
+        System.out.println("进入getInfo服务");
         User user = new User();
         user.setUsername("noc");
         return user;
@@ -76,5 +81,6 @@ public class UserController {
     public void delete(@PathVariable String id) {
         System.out.println(id);
     }
+
 
 }
