@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.AsyncSupportConfigurer;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -21,19 +22,19 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     private TimeInterceptor timeInterceptor;
 
     /**
-     *
      * @param registry 拦截器注册器
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(timeInterceptor);
+//		registry.addInterceptor(timeInterceptor);
     }
 
     /**
      * 和web.xml中配置filter作用一样
+     *
      * @return
      */
-    @Bean
+//    @Bean
     public FilterRegistrationBean timeFilter() {
 
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
@@ -51,4 +52,16 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     }
 
+    @Override
+    public void configureAsyncSupport(AsyncSupportConfigurer configurer) {
+        super.configureAsyncSupport(configurer);
+        // 针对Callable注册拦截器
+//        configurer.registerCallableInterceptors()
+        // 针对DeferredResult注册拦截器
+//        configurer.registerDeferredResultInterceptors()
+        // 异步请求默认超时时间
+//        configurer.setDefaultTimeout()
+        // 可以替代spring的简单线程池（spring其实不是提供一个真正的线程池）
+//        configurer.setTaskExecutor()
+    }
 }

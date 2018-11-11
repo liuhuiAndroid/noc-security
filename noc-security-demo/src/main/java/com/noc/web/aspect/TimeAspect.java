@@ -9,8 +9,8 @@ import java.util.Date;
 /**
  * 切片
  */
-@Aspect
-@Component
+//@Aspect
+//@Component
 public class TimeAspect {
 
     // @Before()

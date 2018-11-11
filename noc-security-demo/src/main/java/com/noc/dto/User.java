@@ -2,22 +2,29 @@ package com.noc.dto;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.noc.validator.MyConstraint;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.Past;
 import java.util.Date;
 
+@ApiModel
 public class User {
 
+    @ApiModelProperty(value = "用户id")
     private String id;
 
     @MyConstraint(message = "这是一个测试")
+    @ApiModelProperty(value = "用户名称")
     private String username;
 
     @NotBlank(message = "密码不能为空")
+    @ApiModelProperty(value = "用户密码")
     private String password;
 
     @Past(message = "生日必须是过去的时间")
+    @ApiModelProperty(value = "用户生日")
     private Date birthday;
 
     /**
