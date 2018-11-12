@@ -17,7 +17,8 @@ import java.util.Date;
 @RequestMapping("/file")
 public class FileController {
 
-    private String folder = "D:\\JavaStudy\\noc-security\\noc-security-demo\\src\\main\\java\\com\\noc\\web\\controller";
+//    private String folder = "D:\\JavaStudy\\noc-security\\noc-security-demo\\src\\main\\java\\com\\noc\\web\\controller";
+    private String folder = "E:\\my_project\\noc-security\\noc-security-demo\\src\\main\\java\\com\\noc\\web\\controller";
 
     @PostMapping
     public FileInfo upload(MultipartFile file) throws Exception {

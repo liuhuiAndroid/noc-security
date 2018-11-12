@@ -11,7 +11,7 @@ import org.springframework.web.context.request.async.DeferredResult;
 import java.util.concurrent.Callable;
 
 @RestController
-@RequestMapping("/order")
+@RequestMapping("/async")
 public class AsyncController {
 
     @Autowired
@@ -29,7 +29,7 @@ public class AsyncController {
      * @throws Exception
      */
     @RequestMapping("/main")
-    public String orderMain() throws Exception {
+    public String asyncMain() throws Exception {
         logger.info("主线程开始");
         Thread.sleep(1000);
         logger.info("主线程返回");
@@ -43,7 +43,7 @@ public class AsyncController {
      * @throws Exception
      */
     @RequestMapping("/callable")
-    public Callable<String> orderCallable() throws Exception {
+    public Callable<String> asyncCallable() throws Exception {
         logger.info("主线程开始");
         Callable<String> result = () -> {
             logger.info("副线程开始");
@@ -62,14 +62,14 @@ public class AsyncController {
      * @throws Exception
      */
     @RequestMapping("/deferredResult")
-    public DeferredResult<String> orderDeferredResult() throws Exception {
+    public DeferredResult<String> asyncDeferredResult() throws Exception {
         logger.info("主线程开始");
         // 生成随机订单号
         String orderNumber = RandomStringUtils.randomNumeric(8);
-        // 放入消息队列
-        mockQueue.setPlaceOrder(orderNumber);
         DeferredResult<String> result = new DeferredResult<>();
         deferredResultHolder.getMap().put(orderNumber, result);
+        // 放入消息队列
+        mockQueue.setPlaceOrder(orderNumber);
         logger.info("主线程返回");
         return result;
     }
