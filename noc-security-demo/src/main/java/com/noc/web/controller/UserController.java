@@ -10,10 +10,15 @@ import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
@@ -84,6 +89,21 @@ public class UserController {
     @DeleteMapping("/{id:\\d+}")
     public void delete(@ApiParam(value = "用户id") @PathVariable String id) {
         System.out.println(id);
+    }
+
+    @GetMapping("/me/1")
+    public Object getCurrentUser1() {
+        return SecurityContextHolder.getContext().getAuthentication();
+    }
+
+    @GetMapping("/me/2")
+    public Object getCurrentUser2(Authentication user) {
+        return user;
+    }
+
+    @GetMapping("/me/3")
+    public Object getCurrentUser3(@AuthenticationPrincipal UserDetails user) {
+        return user;
     }
 
 }
