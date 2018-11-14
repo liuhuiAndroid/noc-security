@@ -47,11 +47,13 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
     @Override
     public void afterPropertiesSet() throws ServletException {
         super.afterPropertiesSet();
-        // 获取配置中的拦截url
-        String[] configUrls = StringUtils.splitByWholeSeparatorPreserveAllTokens(
-                securityProperties.getCode().getImage().getUrl(), ",");
-        for (String configUrl : configUrls) {
-            urls.add(configUrl);
+        if (StringUtils.isNotBlank(securityProperties.getCode().getImage().getUrl())) {
+            // 获取配置中的拦截url
+            String[] configUrls = StringUtils.splitByWholeSeparatorPreserveAllTokens(
+                    securityProperties.getCode().getImage().getUrl(), ",");
+            for (String configUrl : configUrls) {
+                urls.add(configUrl);
+            }
         }
         urls.add("/authentication/form");
     }

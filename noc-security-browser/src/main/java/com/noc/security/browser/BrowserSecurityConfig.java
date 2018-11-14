@@ -7,11 +7,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import javax.sql.DataSource;
 
 /**
  * WebSecurityConfigurerAdapter Web应用安全配置适配器
@@ -28,6 +33,15 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private AuthenticationFailureHandler nocAuthenctiationFailureHandler;
 
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    /**
+     * 数据源
+     */
+    @Autowired
+    private DataSource dataSource;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         ValidateCodeFilter validateCodeFilter = new ValidateCodeFilter();
@@ -41,6 +55,11 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/authentication/form") // 自定义表单提交请求
                 .successHandler(nocAuthenticationSuccessHandler) // 自定义登录成功处理器
                 .failureHandler(nocAuthenctiationFailureHandler) // 自定义登录失败处理器
+                .and()
+                .rememberMe() // 记住我功能
+                .tokenRepository(persistentTokenRepository()) // 记住我功能配置TokenRepository
+                .tokenValiditySeconds(securityProperties.getBrowser().getRememberMeSeconds()) // 记住我功能配置有效期
+                .userDetailsService(userDetailsService) // 记住我功能配置UserDetailsService
                 .and()
                 .authorizeRequests()
                 .antMatchers("/authentication/require",
@@ -59,6 +78,21 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    /**
+     * 配置TokenRepository与数据库交互
+     *
+     * @return
+     */
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+        tokenRepository.setDataSource(dataSource);
+        // 可以拿 JdbcTokenRepositoryImpl.CREATE_TABLE_SQL 脚本在数据库执行生成 persistent_logins 表
+        // 启动时自动创建表
+//		tokenRepository.setCreateTableOnStartup(true);
+        return tokenRepository;
     }
 
 }

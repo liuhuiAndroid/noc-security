@@ -7,6 +7,9 @@ public class BrowserProperties {
 
     private LoginType loginType = LoginType.JSON;
 
+    // 记住我功能有效时间，一周
+    private int rememberMeSeconds = 604800;
+
     public String getLoginPage() {
         return loginPage;
     }
@@ -21,5 +24,13 @@ public class BrowserProperties {
 
     public void setLoginType(LoginType loginType) {
         this.loginType = loginType;
+    }
+
+    public int getRememberMeSeconds() {
+        return rememberMeSeconds;
+    }
+
+    public void setRememberMeSeconds(int rememberMeSeconds) {
+        this.rememberMeSeconds = rememberMeSeconds;
     }
 }
