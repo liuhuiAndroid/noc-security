@@ -1,9 +1,6 @@
 package com.noc.security.core.validate.code;
 
 import com.noc.security.core.properties.SecurityProperties;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.context.request.ServletWebRequest;
 
