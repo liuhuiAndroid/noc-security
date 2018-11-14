@@ -91,8 +91,8 @@ public class UserController {
         System.out.println(id);
     }
 
-    @GetMapping("/me/1")
-    public Object getCurrentUser1() {
+    @GetMapping("/me")
+    public Object getCurrentUser() {
         return SecurityContextHolder.getContext().getAuthentication();
     }
 

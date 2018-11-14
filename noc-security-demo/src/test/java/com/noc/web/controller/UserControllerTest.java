@@ -70,7 +70,7 @@ public class UserControllerTest {
 
     @Test
     public void whenGetInfoFail() throws Exception {
-        mockMvc.perform(get("/user/a")
+        mockMvc.perform(get("/user/server")
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().is4xxClientError());
     }

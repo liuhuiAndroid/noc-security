@@ -25,7 +25,7 @@ public class SmsCodeAuthenticationToken extends AbstractAuthenticationToken {
     // ===================================================================================================
 
     /**
-     * This constructor can be safely used by any code that wishes to create a
+     * This constructor can be safely used by any code that wishes to create server
      * <code>SmsCodeAuthenticationToken</code>, as the {@link #isAuthenticated()}
      * will return <code>false</code>.
      */
@@ -38,7 +38,7 @@ public class SmsCodeAuthenticationToken extends AbstractAuthenticationToken {
     /**
      * This constructor should only be used by <code>AuthenticationManager</code> or
      * <code>AuthenticationProvider</code> implementations that are satisfied with
-     * producing a trusted (i.e. {@link #isAuthenticated()} = <code>true</code>)
+     * producing server trusted (i.e. {@link #isAuthenticated()} = <code>true</code>)
      * authentication token.
      *
      * @param principal
@@ -66,7 +66,7 @@ public class SmsCodeAuthenticationToken extends AbstractAuthenticationToken {
     public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
         if (isAuthenticated) {
             throw new IllegalArgumentException(
-                    "Cannot set this token to trusted - use constructor which takes a GrantedAuthority list instead");
+                    "Cannot set this token to trusted - use constructor which takes server GrantedAuthority list instead");
         }
 
         super.setAuthenticated(false);
