@@ -1,7 +1,7 @@
 package com.noc.security.browser;
 
-import com.noc.security.browser.support.SimpleResponse;
 import com.noc.security.core.properties.SecurityProperties;
+import com.noc.security.core.support.SimpleResponse;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

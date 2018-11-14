@@ -1,4 +1,4 @@
-package com.noc.security.browser.support;
+package com.noc.security.core.support;
 
 public class SimpleResponse {
 

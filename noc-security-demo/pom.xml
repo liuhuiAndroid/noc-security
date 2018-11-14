@@ -12,9 +12,14 @@
     <artifactId>noc-security-demo</artifactId>
 
     <dependencies>
+        <!--<dependency>-->
+            <!--<groupId>com.noc.security</groupId>-->
+            <!--<artifactId>noc-security-browser</artifactId>-->
+            <!--<version>${noc.security.version}</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>com.noc.security</groupId>
-            <artifactId>noc-security-browser</artifactId>
+            <artifactId>noc-security-app</artifactId>
             <version>${noc.security.version}</version>
         </dependency>
         <!--测试框架-->
