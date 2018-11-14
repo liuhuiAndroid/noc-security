@@ -3,7 +3,7 @@ package com.noc.security.core.properties;
 /**
  * 登录方式
  */
-public enum LoginType {
+public enum LoginResponseType {
 
     // 跳转
     REDIRECT,
