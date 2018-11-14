@@ -1,5 +1,7 @@
 package com.noc.security.browser;
 
+import com.noc.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
+import com.noc.security.core.authentication.mobile.SmsCodeFilter;
 import com.noc.security.core.properties.SecurityProperties;
 import com.noc.security.core.validate.code.ValidateCodeFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,9 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     private AuthenticationFailureHandler nocAuthenctiationFailureHandler;
 
     @Autowired
+    private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
+
+    @Autowired
     private UserDetailsService userDetailsService;
 
     /**
@@ -44,12 +49,20 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        // 图形验证码配置
         ValidateCodeFilter validateCodeFilter = new ValidateCodeFilter();
         validateCodeFilter.setAuthenticationFailureHandler(nocAuthenctiationFailureHandler);
         validateCodeFilter.setSecurityProperties(securityProperties);
         // 调用初始化方法
         validateCodeFilter.afterPropertiesSet();
-        http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class) // 配置自定义的过滤器
+        // 短信验证码配置
+        SmsCodeFilter smsCodeFilter = new SmsCodeFilter();
+        smsCodeFilter.setAuthenticationFailureHandler(nocAuthenctiationFailureHandler);
+        smsCodeFilter.setSecurityProperties(securityProperties);
+        smsCodeFilter.afterPropertiesSet();
+
+        http.addFilterBefore(smsCodeFilter, UsernamePasswordAuthenticationFilter.class) // 配置自定义的短信验证码过滤器
+                .addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class) // 配置自定义的图形验证码过滤器
                 .formLogin() // 表单登录
                 .loginPage("/authentication/require") // 自定义登录页面
                 .loginProcessingUrl("/authentication/form") // 自定义表单提交请求
@@ -67,7 +80,8 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/code/*").permitAll() // 需要配置自定义登录页面不需要授权
                 .anyRequest()
                 .authenticated() // 其他任何请求都需要授权
-                .and().csrf().disable(); // 关闭跨站防护
+                .and().csrf().disable() // 关闭跨站防护
+                .apply(smsCodeAuthenticationSecurityConfig); // 添加短信验证码配置
     }
 
     /**
