@@ -1,6 +1,7 @@
 package com.noc.security.core.validate.code;
 
 import com.noc.security.core.properties.SecurityProperties;
+import com.noc.security.core.validate.code.image.ImageCodeGenerator;
 import com.noc.security.core.validate.code.sms.DefaultSmsCodeSender;
 import com.noc.security.core.validate.code.sms.SmsCodeSender;
 import org.springframework.beans.factory.annotation.Autowired;

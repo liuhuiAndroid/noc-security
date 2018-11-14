@@ -64,7 +64,7 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/authentication/require",
                         securityProperties.getBrowser().getLoginPage(),
-                        "/code/image").permitAll() // 需要配置自定义登录页面不需要授权
+                        "/code/*").permitAll() // 需要配置自定义登录页面不需要授权
                 .anyRequest()
                 .authenticated() // 其他任何请求都需要授权
                 .and().csrf().disable(); // 关闭跨站防护

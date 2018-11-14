@@ -1,6 +1,7 @@
-package com.noc.security.core.validate.code;
+package com.noc.security.core.validate.code.image;
 
 import com.noc.security.core.properties.SecurityProperties;
+import com.noc.security.core.validate.code.ValidateCodeGenerator;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.context.request.ServletWebRequest;
 

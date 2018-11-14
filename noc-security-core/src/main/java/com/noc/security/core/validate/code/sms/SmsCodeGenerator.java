@@ -1,10 +1,10 @@
 package com.noc.security.core.validate.code.sms;
 
 import com.noc.security.core.properties.SecurityProperties;
-import com.noc.security.core.validate.code.ImageCode;
 import com.noc.security.core.validate.code.ValidateCode;
 import com.noc.security.core.validate.code.ValidateCodeGenerator;
 import org.apache.commons.lang.RandomStringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.ServletWebRequest;
 
@@ -12,6 +12,7 @@ import org.springframework.web.context.request.ServletWebRequest;
 public class SmsCodeGenerator implements ValidateCodeGenerator {
 
     // 配置类
+    @Autowired
     private SecurityProperties securityProperties;
 
     @Override
