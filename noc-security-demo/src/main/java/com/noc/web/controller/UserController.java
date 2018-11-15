@@ -4,10 +4,17 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.noc.dto.User;
 import com.noc.dto.UserQueryCondition;
 import com.noc.exception.UserNotExistException;
+import com.noc.security.core.properties.SecurityProperties;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.UnsupportedJwtException;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
@@ -26,6 +33,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+
+    @Autowired
+    private SecurityProperties securityProperties;
 
     @GetMapping
     @JsonView(User.UserSimpleView.class)
@@ -103,6 +113,19 @@ public class UserController {
 
     @GetMapping("/me/3")
     public Object getCurrentUser3(@AuthenticationPrincipal UserDetails user) {
+        return user;
+    }
+
+    @GetMapping("/me/jwt")
+    public Object getCurrentUserJwt(Authentication user, HttpServletRequest request) throws Exception {
+        String token = StringUtils.substringAfter(request.getHeader("Authorization"), "bearer ");
+        Claims claims = Jwts.parser()
+                // 设置秘钥
+                .setSigningKey(securityProperties.getOauth2().getJwtSigningKey().getBytes("UTF-8"))
+                // 解析
+                .parseClaimsJws(token).getBody();
+        String company = (String) claims.get("company");
+        System.out.println(company);
         return user;
     }
 
