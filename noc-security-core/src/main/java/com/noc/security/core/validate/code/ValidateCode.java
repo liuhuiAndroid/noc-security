@@ -1,11 +1,12 @@
 package com.noc.security.core.validate.code;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
  * 封装图片验证码信息
  */
-public class ValidateCode {
+public class ValidateCode implements Serializable {
 
     // 图片验证码
     private String code;
@@ -14,16 +15,15 @@ public class ValidateCode {
     private LocalDateTime expireTime;
 
     /**
-     *
-     * @param code 图片验证码
+     * @param code     图片验证码
      * @param expireIn 多少秒之后过期
      */
-    public ValidateCode(String code, int expireIn){
+    public ValidateCode(String code, int expireIn) {
         this.code = code;
         this.expireTime = LocalDateTime.now().plusSeconds(expireIn);
     }
 
-    public ValidateCode(String code, LocalDateTime expireTime){
+    public ValidateCode(String code, LocalDateTime expireTime) {
         this.code = code;
         this.expireTime = expireTime;
     }
