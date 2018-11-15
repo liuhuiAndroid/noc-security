@@ -9,6 +9,7 @@ import com.noc.security.core.validate.code.ValidateCodeSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -64,6 +65,7 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
                         securityProperties.getBrowser().getLoginPage(),
                         SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/*")
                 .permitAll()// 需要配置自定义登录页面不需要授权
+                .antMatchers(HttpMethod.GET,"/user/*").hasRole("ADMIN") // 需要admin权限
                 .anyRequest()
                 .authenticated() // 其他任何请求都需要授权
                 .and().csrf().disable(); // 关闭跨站防护
