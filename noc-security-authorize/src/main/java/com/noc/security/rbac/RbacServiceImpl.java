@@ -1,4 +1,4 @@
-package com.noc.security.rbac.RbacService;
+package com.noc.security.rbac;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
