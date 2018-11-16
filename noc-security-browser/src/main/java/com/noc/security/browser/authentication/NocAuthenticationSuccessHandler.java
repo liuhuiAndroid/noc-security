@@ -1,7 +1,7 @@
 package com.noc.security.browser.authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.noc.security.core.properties.LoginType;
+import com.noc.security.core.properties.LoginResponseType;
 import com.noc.security.core.properties.SecurityProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +41,7 @@ public class NocAuthenticationSuccessHandler extends SavedRequestAwareAuthentica
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
         logger.info("登录成功");
-        if (LoginType.JSON.equals(securityProperties.getBrowser().getLoginType())) {
+        if (LoginResponseType.JSON.equals(securityProperties.getBrowser().getLoginType())) {
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().write(objectMapper.writeValueAsString(authentication));
         } else {

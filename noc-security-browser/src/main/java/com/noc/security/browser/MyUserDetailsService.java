@@ -31,6 +31,6 @@ public class MyUserDetailsService implements UserDetailsService {
                 true, // 密码是否过期
                 true,  // 账户是否锁定冻结
                 // 把逗号隔开的字符串转GrantedAuthority集合，拥有哪些权限
-                AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_ADMIN"));
+                AuthorityUtils.commaSeparatedStringToAuthorityList("ADMIN"));
     }
 }

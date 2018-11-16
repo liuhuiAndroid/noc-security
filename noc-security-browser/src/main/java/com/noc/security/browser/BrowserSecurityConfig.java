@@ -2,6 +2,7 @@ package com.noc.security.browser;
 
 import com.noc.security.core.authentication.AbstractChannelSecurityConfig;
 import com.noc.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
+import com.noc.security.core.authorize.AuthorizeConfigManager;
 import com.noc.security.core.properties.SecurityConstants;
 import com.noc.security.core.properties.SecurityProperties;
 import com.noc.security.core.validate.code.ValidateCodeFilter;
@@ -41,6 +42,9 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
     @Autowired
     private ValidateCodeSecurityConfig validateCodeSecurityConfig;
 
+    @Autowired
+    private AuthorizeConfigManager authorizeConfigManager;
+
     /**
      * 数据源
      */
@@ -60,15 +64,11 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
                 .userDetailsService(userDetailsService) // 记住我功能配置UserDetailsService
                 .and()
                 .authorizeRequests()
-                .antMatchers(SecurityConstants.DEFAULT_UNAUTHENTICATION_URL,
-                        SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE,
-                        securityProperties.getBrowser().getLoginPage(),
-                        SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/*")
-                .permitAll()// 需要配置自定义登录页面不需要授权
-                .antMatchers(HttpMethod.GET,"/user/*").hasRole("ADMIN") // 需要admin权限
-                .anyRequest()
-                .authenticated() // 其他任何请求都需要授权
-                .and().csrf().disable(); // 关闭跨站防护
+                .antMatchers("/code/*").permitAll()
+                .and()
+                .csrf().disable(); // 关闭跨站防护
+
+        authorizeConfigManager.config(http.authorizeRequests());
     }
 
     /**
