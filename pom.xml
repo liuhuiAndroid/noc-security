@@ -13,6 +13,7 @@
         <module>noc-security-app</module>
         <module>noc-security-browser</module>
         <module>noc-security-demo</module>
+        <module>noc-security-authorize</module>
     </modules>
 
     <properties>

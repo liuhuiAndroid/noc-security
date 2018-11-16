@@ -22,6 +22,11 @@
             <!--<artifactId>noc-security-app</artifactId>-->
             <!--<version>${noc.security.version}</version>-->
         <!--</dependency>-->
+        <dependency>
+            <groupId>com.noc.security</groupId>
+            <artifactId>noc-security-authorize</artifactId>
+            <version>${noc.security.version}</version>
+        </dependency>
         <!--测试框架-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
