@@ -1,5 +1,6 @@
-package com.noc.security.rbac;
+package com.noc.security.rbac.service.impl;
 
+import com.noc.security.rbac.service.RbacService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;

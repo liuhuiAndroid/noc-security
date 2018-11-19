@@ -1,4 +1,4 @@
-package com.noc.security.rbac;
+package com.noc.security.rbac.service;
 
 import org.springframework.security.core.Authentication;
 import javax.servlet.http.HttpServletRequest;
